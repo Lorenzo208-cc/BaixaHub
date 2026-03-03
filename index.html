@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BaixaHub</title>
+
+<style>
+body{
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial, sans-serif;
+}
+
+#topbar{
+    background:#000;
+    padding:15px;
+    font-size:20px;
+    font-weight:bold;
+    text-align:center;
+    border-bottom:2px solid #222;
+}
+
+#apps{
+    padding:20px;
+}
+
+.app{
+    background:#1a1a1a;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:10px;
+    transition:0.2s;
+}
+
+.app:hover{
+    background:#222;
+}
+
+.app h2{
+    margin:0 0 10px 0;
+}
+
+.app p{
+    margin:0 0 10px 0;
+    color:#aaa;
+}
+
+.app a{
+    display:inline-block;
+    padding:8px 12px;
+    background:#00bfff;
+    color:black;
+    text-decoration:none;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.app a:hover{
+    background:#009acd;
+}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+    BaixaHub
+</div>
+
+<div id="apps">
+    Carregando apps...
+</div>
+
+<script>
+fetch("apps.json")
+.then(response => response.json())
+.then(data => {
+    const container = document.getElementById("apps");
+    container.innerHTML = "";
+
+    data.apps.forEach(app => {
+        const div = document.createElement("div");
+        div.className = "app";
+
+        div.innerHTML = `
+            <h2>${app.nome}</h2>
+            <p>${app.descricao}</p>
+            <a href="${app.link}" target="_blank">Baixar</a>
+        `;
+
+        container.appendChild(div);
+    });
+})
+.catch(error => {
+    document.getElementById("apps").innerHTML = "Erro ao carregar apps.";
+});
+</script>
+
+</body>
+</html>
